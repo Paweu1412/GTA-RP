@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/Wydanie-v0.1a-blue.svg">
   <img src="https://img.shields.io/badge/Autor-Pawcio-blue.svg"></br>
   <img src="https://img.shields.io/badge/Archiwum-Nie-red.svg">
-  <img src="https://img.shields.io/badge/W%20realizacji-Tak-red.svg">
+  <img src="https://img.shields.io/badge/W%20realizacji-Tak-green.svg">
 </p>
 
 
