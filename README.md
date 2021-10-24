@@ -1,5 +1,5 @@
 <p align="center">
-  GTA-RP [nazwa robocza]</br></br>
+  <img src="https://github.com/Paweu1412/GTA-RP/blob/main/rp_login/files/logo.png"></br></br>
   
   <img src="https://img.shields.io/badge/Wydanie-v0.1a-blue.svg">
   <img src="https://img.shields.io/badge/Autor-Pawcio-blue.svg"></br>
