@@ -1,0 +1,7 @@
+<meta>
+    <info author="Pawcio#4564"/>
+
+    <script src="sourceShared.lua" type="shared" cache="false"/>
+
+    <export function="generateString" type="shared"/>
+</meta>

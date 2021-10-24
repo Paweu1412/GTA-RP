@@ -1,0 +1,9 @@
+<meta>
+    <info author="Pawcio#4564"/>
+
+    <file src="files/logo.png" type="client"/>
+    <file src="files/song.mp3" type="client"/>
+
+    <script src="sourceS.lua" type="server"/>
+    <script src="sourceC.lua" type="client" cache="false"/>
+</meta>
