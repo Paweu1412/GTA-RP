@@ -1,15 +1,21 @@
 addEventHandler("onClientResourceStart", resourceRoot, function(startedResource)
-    initializeLogin(startedResource)
+    initializeLoginUI(startedResource)
 end)
 
-local playingMusic = false
-
-local loginGui = {
+loginGui = {
     staticimage = {},
     edit = {},
     button = {},
     label = {}
 }
+
+function initializeLoginUI(startedResource)
+    if startedResource == getThisResource() then
+        showLoginGui(true)
+    end
+end
+
+local playingMusic = false
 
 function showLoginGui(state)
     if state == true then
@@ -21,6 +27,26 @@ function showLoginGui(state)
         fadeCamera(false)
 
         loginGui.button[1] = guiCreateButton(0.45, 0.62, 0.10, 0.03, "Zaloguj", true)
+        addEventHandler("onClientGUIClick", loginGui.button[1], function(button, state)
+            if button == "left" and state == "up" then
+                if isElement(loginGui.edit[1]) and isElement(loginGui.edit[2]) then
+                    if string.len(guiGetText(loginGui.edit[1])) == 0 then
+                        triggerEvent("GTARP:SendOutput", localPlayer, 1)
+                        return false
+                    end
+
+                    if string.len(guiGetText(loginGui.edit[2])) == 0 then
+                        triggerEvent("GTARP:SendOutput", localPlayer, 2)
+                        return false
+                    end
+                
+                    if string.len(guiGetText(loginGui.edit[2])) > 1 then
+                        triggerServerEvent("GTARP:LoginButtonTriggered", localPlayer, guiGetText(loginGui.edit[1]), guiGetText(loginGui.edit[2]))
+                    end
+                end
+            end
+        end, false)
+
         loginGui.button[2] = guiCreateButton(0.45, 0.66, 0.10, 0.03, "Zarejestruj", true)
         addEventHandler("onClientGUIClick", loginGui.button[2], function(button, state)
             if button == "left" and state == "up" then
@@ -40,8 +66,14 @@ function showLoginGui(state)
         guiLabelSetHorizontalAlign(loginGui.label[2], "center", false)
         guiLabelSetVerticalAlign(loginGui.label[2], "center")
 
+        loginGui.label[3] = guiCreateLabel(0.425, 0.71, 0.15, 0.05, "", true)
+        guiSetFont(loginGui.label[3], "default-bold-small")
+        guiLabelSetColor(loginGui.label[3], 255, 0, 0)
+        guiLabelSetHorizontalAlign(loginGui.label[3], "center", false)
+
         loginGui.edit[1] = guiCreateEdit(0.45, 0.49, 0.10, 0.03, "", true)
         loginGui.edit[2] = guiCreateEdit(0.45, 0.56, 0.10, 0.03, "", true)
+        guiEditSetMasked(loginGui.edit[2], true)
 
         loginGui.staticimage[1] = guiCreateStaticImage(0.458, 0.29, 0.09, 0.15, "files/logo.png", true)
     else
@@ -52,11 +84,5 @@ function showLoginGui(state)
 
         destroyElement(playingMusic)
         destroyElement(guiRoot)
-    end
-end
-
-function initializeLogin(startedResource)
-    if startedResource == getThisResource() then
-        showLoginGui(true)
     end
 end
