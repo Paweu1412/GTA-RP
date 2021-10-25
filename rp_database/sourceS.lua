@@ -33,11 +33,14 @@ function dbQueryExtended(query)
 
         if queryHandle then
             pollProgress = dbPoll(queryHandle, -1)
-            pollProgress = pollProgress[1]
 
             if not pollProgress then
                 dbFree(queryHandle)
                 return finalResult
+            end
+
+            if table.maxn(pollProgress) == 1 then
+                pollProgress = pollProgress[1]
             end
 
             finalResult = pollProgress

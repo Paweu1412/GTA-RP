@@ -55,7 +55,7 @@ function showLoginGui(state)
             end
         end, false)
 
-        loginGui.label[1] = guiCreateLabel(0.46, 0.47, 0.08, 0.02, "Login", true)
+        loginGui.label[1] = guiCreateLabel(0.46, 0.47, 0.08, 0.02, "Nazwa użytkownika", true)
         guiSetFont(loginGui.label[1], "default-bold-small")
         guiLabelSetHorizontalAlign(loginGui.label[1], "center", false)
         guiLabelSetVerticalAlign(loginGui.label[1], "center")
@@ -77,12 +77,42 @@ function showLoginGui(state)
 
         loginGui.staticimage[1] = guiCreateStaticImage(0.458, 0.29, 0.09, 0.15, "files/logo.png", true)
     else
-        setCameraTarget(localPlayer, localPlayer)
-        fadeCamera(true, 0.2)
-        showChat(true)
-        showCursor(false)
-
-        destroyElement(playingMusic)
         destroyElement(guiRoot)
     end
 end
+addEvent("GTARP:ShowLoginGui", true)
+addEventHandler("GTARP:ShowLoginGui", localPlayer, showLoginGui)
+
+local characterSelectionElements = {
+    button = {},
+    data = {}
+}
+
+addEvent("GTARP:InitializeCharacterSelection", true)
+addEventHandler("GTARP:InitializeCharacterSelection", localPlayer, function(charactersData)
+    if charactersData then
+        local currentPosition = 0.04
+
+        for i=1, #charactersData do
+            characterSelectionElements.button[guiCreateButton(0.45, currentPosition, 0.10, 0.03, string.gsub(charactersData[i].name, "_", " "), true)] = i
+            characterSelectionElements.data[i] = charactersData[i]
+
+            currentPosition = currentPosition + 0.04
+        end
+
+        addEventHandler("onClientGUIClick", resourceRoot, function(button, state)
+            if button == "left" and state == "up" then
+                local selectedCharacterData = characterSelectionElements.data[characterSelectionElements.button[source]]
+                
+                if selectedCharacterData and selectedCharacterData ~= nil then
+                    destroyElement(playingMusic)
+                    showLoginGui(false)
+
+                    triggerServerEvent("GTARP:SpawnInSelectedCharacter", localPlayer, selectedCharacterData)
+                    showCursor(false)
+                    showChat(true)
+                end
+            end
+        end)
+    end
+end)
