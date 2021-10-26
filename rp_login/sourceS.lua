@@ -35,12 +35,10 @@ end)
 addEvent("GTARP:SpawnInSelectedCharacter", true)
 addEventHandler("GTARP:SpawnInSelectedCharacter", root, function(characterData)
     if client and characterData then
-        iprint(characterData[15], characterData)
-
         if fadeCamera(client, true, 2) then
             if setCameraTarget(client, client) then
-                if spawnPlayer(client, characterData.x, characterData.y, characterData.z, characterData.rotation, characterData.skin, 0, characterData.vw) then
-                    -- ciąg dalszy
+                if spawnPlayer(client, characterData.last_x, characterData.last_y, characterData.last_z, characterData.rotation, characterData.skin, 0, characterData.vw) then
+                    triggerEvent("GTARP:LoginSuccessful", client, characterData)
                 end
             end
         end

@@ -17,7 +17,7 @@ end
 
 local playingMusic = false
 
-function showLoginGui(state)
+function showLoginGui(state, loginEnd)
     if state == true then
         playingMusic = playSound("files/song.mp3", true)
         setSoundVolume(playingMusic, 0.2)
@@ -76,8 +76,14 @@ function showLoginGui(state)
         guiEditSetMasked(loginGui.edit[2], true)
 
         loginGui.staticimage[1] = guiCreateStaticImage(0.458, 0.29, 0.09, 0.15, "files/logo.png", true)
-    else
+    elseif state == false then
         destroyElement(guiRoot)
+
+        if loginEnd == true then
+            showCursor(false)
+            showChat(true)
+            destroyElement(playingMusic)
+        end
     end
 end
 addEvent("GTARP:ShowLoginGui", true)
@@ -93,11 +99,16 @@ addEventHandler("GTARP:InitializeCharacterSelection", localPlayer, function(char
     if charactersData then
         local currentPosition = 0.04
 
-        for i=1, #charactersData do
-            characterSelectionElements.button[guiCreateButton(0.45, currentPosition, 0.10, 0.03, string.gsub(charactersData[i].name, "_", " "), true)] = i
-            characterSelectionElements.data[i] = charactersData[i]
+        if #charactersData > 0 then
+            for i=1, #charactersData do
+                characterSelectionElements.button[guiCreateButton(0.45, currentPosition, 0.10, 0.03, string.gsub(charactersData[i].name, "_", " "), true)] = i
+                characterSelectionElements.data[i] = charactersData[i]
 
-            currentPosition = currentPosition + 0.04
+                currentPosition = currentPosition + 0.04
+            end
+        else
+            characterSelectionElements.button[guiCreateButton(0.45, currentPosition, 0.10, 0.03, string.gsub(charactersData.name, "_", " "), true)] = 1
+            characterSelectionElements.data[1] = charactersData
         end
 
         addEventHandler("onClientGUIClick", resourceRoot, function(button, state)
@@ -105,12 +116,9 @@ addEventHandler("GTARP:InitializeCharacterSelection", localPlayer, function(char
                 local selectedCharacterData = characterSelectionElements.data[characterSelectionElements.button[source]]
                 
                 if selectedCharacterData and selectedCharacterData ~= nil then
-                    destroyElement(playingMusic)
-                    showLoginGui(false)
+                    showLoginGui(false, true)
 
                     triggerServerEvent("GTARP:SpawnInSelectedCharacter", localPlayer, selectedCharacterData)
-                    showCursor(false)
-                    showChat(true)
                 end
             end
         end)
