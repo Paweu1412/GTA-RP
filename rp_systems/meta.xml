@@ -17,4 +17,6 @@
 
     <export function="getPlayerCurrentCharacter" type="server"/>
     <export function="getCharacterName" type="server"/>
+
+    <export function="getCharacterGender" type="server"/>
 </meta>

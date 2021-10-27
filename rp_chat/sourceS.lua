@@ -24,22 +24,47 @@ function correctText(text, uppercase)
     end
 end
 
+function getPlayersInRange(player, range)
+    if player and range then
+        local playerX, playerY, playerZ = getElementPosition(player)
+        local playersInRange = getElementsWithinRange(playerX, playerY, playerZ, range, "player")
+
+        if not playersInRange then return end
+
+        return playersInRange
+    end
+end
+
+local genderStrings = {
+    ["man"] = {"zawiódł", "odniósł sukces"},
+    ["woman"] = {"zawiodła", "odniosła sukces"}
+}
+
 function outputMessage(player, type, text)
     if player and type and text then
-        local playerX, playerY, playerZ = getElementPosition(player)
+        local currentCharacter = exports.rp_systems:getPlayerData(player, "character_id")
+        
+        if currentCharacter then
+            if type == 1 then -- mówienie
+                outputChatBox(exports.rp_systems:getCharacterData(currentCharacter, "name").. " mówi: " ..correctText(text), getPlayersInRange(player, 10), 255, 255, 255)
+            elseif type == 2 then -- /me
+                outputChatBox("** " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " " ..correctText(text, true), getPlayersInRange(player, 15), 220, 162, 244)
+            elseif type == 3 then -- /do
+                outputChatBox("** " ..correctText(text).. " (( " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " )) **", getPlayersInRange(player, 15), 137, 130, 189)
+            elseif type == 4 then -- szept
+                outputChatBox(exports.rp_systems:getCharacterData(currentCharacter, "name").. " szepcze: " ..correctText(text), getPlayersInRange(player, 5), 255, 255, 255)
+            elseif type == 5 then -- krzyk
+                outputChatBox(exports.rp_systems:getCharacterData(currentCharacter, "name").. " krzyczy: " ..text:gsub("^%l", string.upper).. "!", getPlayersInRange(player, 20), 255, 255, 255)
+            elseif type == 6 then -- ooc
+                outputChatBox("(( " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. ": " ..text.. " ))", getPlayersInRange(player, 15), 171, 171, 171)
+            elseif type == 7 then -- /sprobuj
+                print(true)
 
-        if playerX and playerY and playerZ then
-            local playersInRange = getElementsWithinRange(playerX, playerY, playerZ, 15, "player")
-            local currentCharacter = exports.rp_systems:getPlayerData(player, "character_id")
-            
-            if playersInRange and currentCharacter then
-                if type == 1 then
-                    outputChatBox(exports.rp_systems:getCharacterData(currentCharacter, "name").. " mówi: " ..correctText(text), playersInRange, 255, 255, 255)
-                elseif type == 2 then
-                    outputChatBox("** " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " " ..correctText(text, true), playersInRange, 220, 162, 244)
-                elseif type == 3 then
-                    outputChatBox("** " ..correctText(text).. " (( " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " )) **", playersInRange, 137, 130, 189)
-                end
+                local characterUID = exports.rp_systems:getPlayerCurrentCharacter(player)
+                local characterGender = exports.rp_systems:getCharacterGender(characterUID)
+                iprint(characterUID, characterGender)
+
+                outputChatBox("* " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " " ..genderStrings[characterGender][math.random(#genderStrings[characterGender])].. " próbując "..correctText(text, true), getPlayersInRange(player, 15), 220, 162, 244)
             end
         end
     end
@@ -49,8 +74,48 @@ addCommandHandler("do", function(player, command, ...)
     if player then
         local text = {...}
         text = table.concat(text, " ")
-        if not text then return end
+        if not text or string.len(text) < 1 then return end
 
         outputMessage(player, 3, text)
+    end
+end)
+
+addCommandHandler("c", function(player, command, ...)
+    if player then
+        local text = {...}
+        text = table.concat(text, " ")
+        if not text or string.len(text) < 1 then return end
+
+        outputMessage(player, 4, text)
+    end
+end)
+
+addCommandHandler("k", function(player, command, ...)
+    if player then
+        local text = {...}
+        text = table.concat(text, " ")
+        if not text or string.len(text) < 1 then return end
+
+        outputMessage(player, 5, text)
+    end
+end)
+
+addCommandHandler("b", function(player, command, ...)
+    if player then
+        local text = {...}
+        text = table.concat(text, " ")
+        if not text or string.len(text) < 1 then return end
+
+        outputMessage(player, 6, text)
+    end
+end)
+
+addCommandHandler("sprobuj", function(player, command, ...)
+    if player then
+        local text = {...}
+        text = table.concat(text, " ")
+        if not text or string.len(text) < 1 then return end
+
+        outputMessage(player, 7, text)
     end
 end)
