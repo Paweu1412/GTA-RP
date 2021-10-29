@@ -32,11 +32,11 @@ addEventHandler("onClientRender", root, function()
 
 							for oX = (1.8 * -1), 1.8 do
 								for oY = (1.8 * -1), 1.8 do
-									dxDrawText(playerNickname.. " (" ..playerID.. ")", sx + oX, sy + oY, sx + oX, sy + oY, tocolor(0, 0, 0), scale*2.5/zoom, "default-bold", "center", "center")
+									dxDrawText(playerNickname.. " (" ..playerID.. ")", sx + oX, sy + oY, sx + oX, sy + oY, tocolor(0, 0, 0, 255), scale*2.5/zoom, "default-bold", "center", "center")
 								end
 							end
 
-							dxDrawText(playerNickname.. " (" ..playerID.. ")", sx, sy, sx, sy, tocolor(232, 248, 255), scale*2.5/zoom, "default-bold", "center", "center")
+							dxDrawText(playerNickname.. " (" ..playerID.. ")", sx, sy, sx, sy, tocolor(232, 248, 255, 245), scale*2.5/zoom, "default-bold", "center", "center")
 						end
 					end
 				end
