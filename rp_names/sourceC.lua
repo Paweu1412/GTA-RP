@@ -1,26 +1,3 @@
---[[function dxDrawBorderedTextOnElement(element, outline, text, color, scale, font, alignX, alignY, clip, wordBreak, postGUI, colorCoded, subPixelPositioning, fRotation, fRotationCenterX, fRotationCenterY)
-    local x, y, z = getElementPosition(element)
-	local x2, y2, z2 = getCameraMatrix()
-	local distance = distance or 20
-	local height = height or 1
-
-	if (isLineOfSightClear(x, y, z+2, x2, y2, z2)) then
-		local sx, sy = getScreenFromWorldPosition(x, y, z+height)
-		if(sx) and (sy) then
-			local distanceBetweenPoints = getDistanceBetweenPoints3D(x, y, z, x2, y2, z2)
-			if(distanceBetweenPoints < distance) then
-				for oX = (outline * -1), outline do
-					for oY = (outline * -1), outline do
-						dxDrawText(text, sx + oX, sy + oY, sx + oX, sy + oY, tocolor(0, 0, 0, 255), scale, font, alignX, alignY, clip, wordBreak, postGUI, colorCoded, subPixelPositioning, fRotation, fRotationCenterX, fRotationCenterY)
-					end
-				end
-
-				dxDrawText(text, sx, sy, sx, sy, color, scale, font, alignX, alignY, clip, wordBreak, postGUI, colorCoded, subPixelPositioning, fRotation, fRotationCenterX, fRotationCenterY)
-			end 
-		end 
-	end  
-end]]--
-
 local screenW, screenH = guiGetScreenSize()
 
 local baseX = 1920
@@ -59,7 +36,7 @@ addEventHandler("onClientRender", root, function()
 								end
 							end
 
-							dxDrawText(playerNickname.. " (" ..playerID.. ")", sx, sy, sx, sy, tocolor(255, 255, 255), scale*2.5/zoom, "default-bold", "center", "center")
+							dxDrawText(playerNickname.. " (" ..playerID.. ")", sx, sy, sx, sy, tocolor(232, 248, 255), scale*2.5/zoom, "default-bold", "center", "center")
 						end
 					end
 				end
