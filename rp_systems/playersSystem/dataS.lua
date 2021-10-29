@@ -1,20 +1,22 @@
 local playersData = {}
 
-function setPlayerData(uid, key, data)
-    if uid and key and data then
-        if not playersData[uid] then 
-            playersData[uid] = {}
+function setPlayerData(player, key, data)
+    if player and key and data then
+        if not playersData[player] then 
+            playersData[player] = {}
         end
 
-        playersData[uid][key] = data
+        playersData[player][key] = data
+
+        triggerClientEvent("GTARP:ClientUpdatePlayerData", resourceRoot, playersData)
         return true
     end
 end
 
-function getPlayerData(uid, key)
-    if uid and key then
-        if not playersData[uid] or not playersData[uid][key] then return end
+function getPlayerData(player, key)
+    if player and key then
+        if not playersData[player] or not playersData[player][key] then return end
 
-        return playersData[uid][key]
+        return playersData[player][key]
     end
 end

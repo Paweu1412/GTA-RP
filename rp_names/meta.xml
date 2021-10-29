@@ -1,0 +1,5 @@
+<meta>
+    <info author="Pawcio#4564" description="System wirtualnych tekstów nad głową"/>
+
+    <script src="sourceC.lua" type="client" cache="false"/>
+</meta>

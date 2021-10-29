@@ -39,6 +39,8 @@ addEventHandler("GTARP:SpawnInSelectedCharacter", root, function(characterData)
             if setCameraTarget(client, client) then
                 if spawnPlayer(client, characterData.last_x, characterData.last_y, characterData.last_z, characterData.rotation, characterData.skin, 0, characterData.vw) then
                     triggerEvent("GTARP:LoginSuccessful", client, characterData)
+
+                    setPlayerName(client, characterData.name)
                 end
             end
         end

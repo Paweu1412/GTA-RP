@@ -7,6 +7,8 @@ function setCharacterData(uid, key, data)
         end
 
         charactersData[uid][key] = data
+
+        triggerClientEvent("GTARP:ClientUpdateCharacterData", root, charactersData)
         return true
     end
 end

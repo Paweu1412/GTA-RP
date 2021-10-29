@@ -2,5 +2,4 @@
     <info author="Pawcio#4564"/>
 
     <script src="sourceS.lua" type="server"/>
-    <script src="sourceC.lua" type="client" cache="false"/>
 </meta>
