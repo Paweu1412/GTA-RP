@@ -1,7 +1,7 @@
 local charactersData = {}
 
-addEvent("GTARP:ClientCharacterCharacterData", true)
-addEventHandler("GTARP:ClientCharacterCharacterData", root, function(serverCharactersData)
+addEvent("GTARP:ClientUpdateCharacterData", true)
+addEventHandler("GTARP:ClientUpdateCharacterData", root, function(serverCharactersData)
     charactersData = serverCharactersData
 end)
 
