@@ -1,4 +1,4 @@
-local assignedID = {}
+assignedID = {}
 
 addEventHandler("onPlayerJoin", root, function()
     for i = 1, 512 do
@@ -15,7 +15,9 @@ addEventHandler("onPlayerQuit", root, function()
     for index, player in pairs(assignedID) do
         if source == player then
             assignedID[index] = nil
+            
             break
         end
     end
 end)
+

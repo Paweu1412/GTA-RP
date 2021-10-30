@@ -5,6 +5,7 @@
     <script src="playersSystem/sourceS.lua" type="server"/>
     <script src="playersSystem/dataS.lua" type="server"/>
     <script src="playersSystem/functionsS.lua" type="server"/>
+    <script src="playersSystem/idS.lua" type="server"/>
 
     <script src="charactersSystem/dataC.lua" type="client" cache="false"/>
     <script src="charactersSystem/sourceS.lua" type="server"/>
@@ -14,6 +15,8 @@
     <export function="setPlayerData" type="server"/>
     <export function="getPlayerData" type="server"/>
     <export function="getPlayerData" type="client"/>
+    
+    <export function="getPlayerByID" type="server"/>
 
     <export function="setCharacterData" type="server"/>
     <export function="getCharacterData" type="server"/>

@@ -1,0 +1,9 @@
+<meta>
+    <info author="Pawcio#4564"/>
+
+    <script src="sourceS.lua" type="server"/>
+    <script src="sourceC.lua" type="client" cache="false"/>
+
+    <export function="showInformation" type="client"/>
+    <export function="showInformation" type="server"/>
+</meta>

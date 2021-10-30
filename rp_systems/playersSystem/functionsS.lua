@@ -7,3 +7,13 @@ function getPlayerCurrentCharacter(player)
         return currentCharacter
     end
 end
+
+function getPlayerByID(id)
+    if id then
+        if assignedID[id] then
+            return assignedID[id]
+        end
+
+        return false
+    end
+end

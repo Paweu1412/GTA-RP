@@ -55,7 +55,7 @@ function showLoginGui(state, loginEnd)
             end
         end, false)
 
-        loginGui.label[1] = guiCreateLabel(0.46, 0.47, 0.08, 0.02, "Nazwa użytkownika", true)
+        loginGui.label[1] = guiCreateLabel(0.43, 0.47, 0.14, 0.02, "Nazwa użytkownika", true)
         guiSetFont(loginGui.label[1], "default-bold-small")
         guiLabelSetHorizontalAlign(loginGui.label[1], "center", false)
         guiLabelSetVerticalAlign(loginGui.label[1], "center")

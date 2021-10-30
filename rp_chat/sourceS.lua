@@ -72,7 +72,7 @@ local genderStrings = {
     ["woman"] = {"zawiodła", "odniosła sukces"}
 }
 
-function outputMessage(player, type, text)
+function outputMessage(player, type, text, id)
     if player and type and text then
         local currentCharacter = exports.rp_systems:getPlayerData(player, "character_id")
         
@@ -96,57 +96,28 @@ function outputMessage(player, type, text)
                 if not characterUID or not characterGender then return end
 
                 outputChatBox("* " ..exports.rp_systems:getCharacterData(currentCharacter, "name").. " " ..genderStrings[characterGender][math.random(#genderStrings[characterGender])].. " próbując "..correctText(text, 1), getPlayersInRange(player, 15), 220, 162, 244)
+            elseif type == 8 then -- /w
+                if id then
+                    id = tonumber(id)
+
+                    if not id then return end
+
+                    local targetPlayer = exports.rp_systems:getPlayerByID(id)
+
+                    if not targetPlayer then
+                        exports.rp_info:showInformation(player, "Wskazany gracz nie istnieje!", "failure")
+                        
+                        return false
+                    end
+
+                    local sendingPlayerID = exports.rp_systems:getPlayerData(player, "id")
+
+                    if id == sendingPlayerID then return end
+
+                    outputChatBox("(( < " ..string.gsub(getPlayerName(player), "_", " ").. " (" ..sendingPlayerID.. "): " ..text.. " ))", targetPlayer, 230, 138, 25)
+                    outputChatBox("(( > " ..string.gsub(getPlayerName(targetPlayer), "_", " ").. " (" ..id.. "): " ..text.. " ))", player, 230, 138, 25)
+                end
             end
         end
     end
 end
-
-addCommandHandler("do", function(player, command, ...)
-    if player then
-        local text = {...}
-        text = table.concat(text, " ")
-        if not text or string.len(text) < 1 then return end
-
-        outputMessage(player, 3, text)
-    end
-end)
-
-addCommandHandler("c", function(player, command, ...)
-    if player then
-        local text = {...}
-        text = table.concat(text, " ")
-        if not text or string.len(text) < 1 then return end
-
-        outputMessage(player, 4, text)
-    end
-end)
-
-addCommandHandler("k", function(player, command, ...)
-    if player then
-        local text = {...}
-        text = table.concat(text, " ")
-        if not text or string.len(text) < 1 then return end
-
-        outputMessage(player, 5, text)
-    end
-end)
-
-addCommandHandler("b", function(player, command, ...)
-    if player then
-        local text = {...}
-        text = table.concat(text, " ")
-        if not text or string.len(text) < 1 then return end
-
-        outputMessage(player, 6, text)
-    end
-end)
-
-addCommandHandler("sprobuj", function(player, command, ...)
-    if player then
-        local text = {...}
-        text = table.concat(text, " ")
-        if not text or string.len(text) < 1 then return end
-
-        outputMessage(player, 7, text)
-    end
-end)
